@@ -23,7 +23,7 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const auth = getAuth(); // Initialize Auth Instance
+  const auth = getAuth();
 
   const handleAuth = async () => {
     if (email === '' || password === '') {
@@ -33,11 +33,9 @@ const Login = ({ navigation }) => {
 
     setLoading(true);
     try {
-      // 1. Try Login
       await signInWithEmailAndPassword(auth, email.trim(), password);
       navigation.navigate('ChatList');
     } catch (error) {
-      // 2. Agar user nahi mila ya credentials galat hain, to signup try karen
       if (
         error.code === 'auth/user-not-found' ||
         error.code === 'auth/invalid-credential'
@@ -50,7 +48,6 @@ const Login = ({ navigation }) => {
           );
           const user = userCredential.user;
 
-          // 3. Firestore mein user data save karen (Search ke liye zaroori hai)
           await firestore().collection('users').doc(user.uid).set({
             email: user.email.toLowerCase(),
             uid: user.uid,

@@ -18,7 +18,6 @@ const ChatList = ({ navigation }) => {
   useEffect(() => {
     if (!myId) return;
 
-    // Listen to chats where I am a participant
     const unsubscribe = firestore()
       .collection('chats')
       .where('participants', 'array-contains', myId)
@@ -34,7 +33,6 @@ const ChatList = ({ navigation }) => {
             const otherUserId = data.participants.find(id => id !== myId);
             if (!otherUserId) return null;
 
-            // Fetch other user's email from 'users' collection
             const userDoc = await firestore()
               .collection('users')
               .doc(otherUserId)

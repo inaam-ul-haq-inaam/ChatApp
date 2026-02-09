@@ -19,7 +19,6 @@ const App = () => {
     return unsubscribe;
   }, []);
 
-  // Global Logout Button Component
   const LogoutButton = () => (
     <TouchableOpacity onPress={() => auth().signOut()} style={styles.logoutBtn}>
       <Text style={styles.logoutText}>Logout</Text>

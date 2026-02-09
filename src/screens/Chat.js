@@ -18,7 +18,6 @@ const Chat = ({ route, navigation }) => {
   const { receiverEmail, receiverId } = route.params;
   const myId = auth().currentUser?.uid;
 
-  // Consistent Chat ID
   const chatId =
     myId > receiverId ? `${myId}_${receiverId}` : `${receiverId}_${myId}`;
 
@@ -46,7 +45,6 @@ const Chat = ({ route, navigation }) => {
     try {
       const chatRef = firestore().collection('chats').doc(chatId);
 
-      // 1. Update Main Chat Doc (Important for ChatList)
       await chatRef.set(
         {
           participants: [myId, receiverId],
@@ -56,7 +54,6 @@ const Chat = ({ route, navigation }) => {
         { merge: true },
       );
 
-      // 2. Add Message to sub-collection
       await chatRef.collection('messages').add({
         text: currentMsg,
         senderId: myId,
